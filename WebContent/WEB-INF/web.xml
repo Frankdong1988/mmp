@@ -46,5 +46,9 @@
         <servlet-name>spring-mvc</servlet-name>  
         <url-pattern>*.do</url-pattern>  
     </servlet-mapping>
-
+    <servlet>  
+        <servlet-name>initServlet</servlet-name>  
+        <servlet-class>com.frank.mmp.common.controller.InitServlet</servlet-class>  
+	    <load-on-startup>3</load-on-startup>  
+    </servlet>  
 </web-app>

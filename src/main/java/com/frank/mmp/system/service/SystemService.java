@@ -9,5 +9,5 @@ package com.frank.mmp.system.service;
  */
 public interface SystemService {
 	
-
+	public void testMapper();
 }

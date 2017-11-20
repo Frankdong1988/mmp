@@ -1,10 +1,8 @@
 package com.frank.mmp.system.service;
 
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.frank.mmp.system.dao.SystemDao;
-import net.sf.json.JSONObject;
 
 /**
 * @author 耶律齐
@@ -16,6 +14,14 @@ public class SystemServiceImpl implements SystemService {
 
 	@Autowired
 	private SystemDao systemDao;
+
+	/* (non-Javadoc)
+	 * @see com.frank.mmp.system.service.SystemService#testMapper()
+	 */
+	@Override
+	public void testMapper() {
+		
+	}
 
 	
 }
