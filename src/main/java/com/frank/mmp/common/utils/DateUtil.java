@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.xjzx.tools.phoneSplit.utils;
+package com.frank.mmp.common.utils;
 
 import java.util.Calendar;
 import java.util.Date;
