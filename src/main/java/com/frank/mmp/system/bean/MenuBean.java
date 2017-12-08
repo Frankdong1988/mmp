@@ -11,11 +11,19 @@ public class MenuBean {
 	private String menuStyle; 
 	/**菜单图标**/
 	private String menuIco; 
+	/**菜单登录校验 1：不需要登录校验，2：需要登录校验**/
+	private Integer menuLoginCheck; 
 	/**菜单父id**/
-	private Long menuParentId; 
+	private Long menuParentId;
 	/**菜单类型(page、button)**/
 	private String menuType;
 	
+	public Integer getMenuLoginCheck() {
+		return menuLoginCheck;
+	}
+	public void setMenuLoginCheck(Integer menuLoginCheck) {
+		this.menuLoginCheck = menuLoginCheck;
+	}
 	public Long getMenuId() {
 		return menuId;
 	}

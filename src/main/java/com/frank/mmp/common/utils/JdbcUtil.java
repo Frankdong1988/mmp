@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.frank.mmp.common.utils;
 
 import java.lang.reflect.Method;
@@ -33,8 +30,6 @@ import net.sf.json.JSONObject;
 public class JdbcUtil {
 	private static Logger log = LoggerFactory.getLogger(JdbcUtil.class);
 	private static Connection con;
-	private static Statement sta;
-	private static ResultSet rs;
 	//驱动程序名
 	private static String driver = "com.mysql.jdbc.Driver";
 	//URL指向要访问的数据库名mydata
@@ -55,105 +50,119 @@ public class JdbcUtil {
 		return con;
 	}
 	
+	/**
+	 * 执行查询SQL 
+	 * @param sql select语句
+	 * @param t 需要封装数据的bean实例
+	 * @return
+	 */
 	public static <T> List<T> select(String sql,T t){
 		if(null == sql || "".equals(sql.trim())){
 			throw new RuntimeException("sql 语句为空异常");
 		}
+		Class tc = t.getClass();
+		Method[] mt = tc.getMethods();
+		Statement sta = null;
+		ResultSet rs = null;
 		try {
             //加载驱动程序
             Class.forName(driver);
             con = getCon();
             // 1.getConnection()方法，连接MySQL数据库
             if(!con.isClosed())
-                log.info("Succeeded connecting to the Database!");
             //2.创建statement类对象，用来执行SQL语句！！
             sta = con.createStatement();
             //3.ResultSet类，用来存放获取的结果集！！
             rs = sta.executeQuery(sql);
             ResultSetMetaData rsm = rs.getMetaData();
             int columNum = rsm.getColumnCount();
-            List<Map<String, Object>> list = new ArrayList<>();
+            List<T> list = new ArrayList<>();
             while(rs.next()){
-            	Map<String, Object> map = new HashMap<>();
+            	T tt = (T) tc.newInstance();
             	for(int i=1; i<=columNum; i++){
             		String columName = rsm.getColumnName(i);
             		Object obj = rs.getObject(columName);
             		if(null == obj){
             			continue;
             		}
-            		columName = formatColumName(columName);
-            		map.put(columName, obj);
+            		for(int j = 0; j<mt.length; j++){
+            			String mtName = mt[j].getName();
+            			if(null != mtName && mtName.startsWith("set") && formatColumName(columName).equals(StringUtil.charToLowerCase(mtName.trim().replace("set", ""),0))){
+            				Class type = mt[j].getParameterTypes()[0];
+            				String typeStr = type.getName();
+            				if(typeStr.equals("java.lang.String")){
+            					mt[j].invoke(tt, rs.getString(columName));
+			                } else if(typeStr.equals("java.util.Date")){
+			                	mt[j].invoke(tt, rs.getDate(columName));
+			                } else if(typeStr.equals("java.lang.Integer")){
+			                	mt[j].invoke(tt, rs.getInt(columName));
+			                } else if(typeStr.equals("java.lang.Boolean")){
+			                	mt[j].invoke(tt, rs.getBoolean(columName));
+			                } else if(typeStr.equals("java.lang.Byte")){
+			                	mt[j].invoke(tt, rs.getByte(columName));
+			                } else if(typeStr.equals("java.lang.Double")){
+			                	mt[j].invoke(tt, rs.getDouble(columName));
+			                } else if(typeStr.equals("java.lang.Float")){
+			                	mt[j].invoke(tt, rs.getFloat(columName));
+			                } else if(typeStr.equals("java.lang.Long")){
+			                	mt[j].invoke(tt, rs.getLong(columName));
+			                } else if(typeStr.equals("java.lang.Number")){
+			                	mt[j].invoke(tt, rs.getInt(columName));
+			                } else if(typeStr.equals("java.lang.Short")){
+			                	mt[j].invoke(tt, rs.getShort(columName));
+			                }
+            				break;
+            			}
+            		}
             	}
-            	list.add(map);
+            	list.add(tt);
             }
-            setDataToObj(list,t);
+            return list;
         } catch (Exception e) {
             log.error("jdbc连接数据库查询异常：",e);
             return null;
         } finally{
         	try {
-				rs.close();
-				sta.close();
+        		if(null != rs){
+        			rs.close();
+        		}
+        		if(null != sta){
+        			sta.close();
+        		}
 				con.close();
 			} catch (Exception e) {
 				log.error("jdbc连接关闭异常：",e);
 			}
         }
-		return null;
 	}
 	
-	private static <T> List<T> setDataToObj(List<Map<String, Object>> list,T t){
-		Class tc = t.getClass();
-		Method[] mt = tc.getMethods();
-		List<T> listT = new ArrayList<>(); 
-		while(!list.isEmpty()){
-			try {
-				t = (T) tc.newInstance();
-			} catch (Exception e) {
-				log.error("实例化异常：",e);
-			}
-			Map<String, Object> map = list.remove(0);
-			Set<String> keys = map.keySet();
-			for(String key:keys){
-				for(int i=0; i<mt.length; i++){
-					String name = mt[i].getName();
-					if(null != name && name.startsWith("set") && key.equals(StringUtil.charToLowerCase(name.trim().replace("set", ""),0))){
-						@SuppressWarnings("unchecked")
-						Class<T> type = (Class<T>) mt[i].getParameterTypes()[0];
-						String typeStr = type.getName();
-						try {
-							if(typeStr.equals("java.lang.String")){
-								mt[i].invoke(t, String.valueOf(map.get(key)));
-			                } else if(typeStr.equals("java.util.Date")){
-			                	mt[i].invoke(t, (Date)map.get(key));
-			                } else if(typeStr.equals("java.lang.Integer")){
-			                	mt[i].invoke(t, (Integer)map.get(key));
-			                } else if(typeStr.equals("java.lang.Boolean")){
-			                	mt[i].invoke(t, (Boolean)map.get(key));
-			                } else if(typeStr.equals("java.lang.Byte")){
-			                	mt[i].invoke(t, (Byte)map.get(key));
-			                } else if(typeStr.equals("java.lang.Double")){
-			                	mt[i].invoke(t, (Double)map.get(key));
-			                } else if(typeStr.equals("java.lang.Float")){
-			                	mt[i].invoke(t, (Float)map.get(key));
-			                } else if(typeStr.equals("java.lang.Long")){
-			                	mt[i].invoke(t, (Long)map.get(key));
-			                } else if(typeStr.equals("java.lang.Number")){
-			                	mt[i].invoke(t, (Number)map.get(key));
-			                } else if(typeStr.equals("java.lang.Short")){
-			                	mt[i].invoke(t, (Short)map.get(key));
-			                }
-						} catch (Exception e) {
-							log.error("反射set方法赋值异常：",e);
-						}
-					}
-				}
-			}
-			listT.add(t);
+	/**
+	 * 更新操作
+	 * @param sql update或者insert语句
+	 * @return 被修改的数据行数
+	 */
+	public static Integer update(String sql){
+		if(null == sql || "".equals(sql.trim())){
+			throw new RuntimeException("sql 语句为空异常");
 		}
-		log.info("最终："+JSONArray.fromObject(listT).toString());
-		return null;
+		Statement sta = null;
+		ResultSet rs = null;
+		try {
+            //加载驱动程序
+            Class.forName(driver);
+            con = getCon();
+            // 1.getConnection()方法，连接MySQL数据库
+            if(!con.isClosed())
+            //2.创建statement类对象，用来执行SQL语句！！
+            sta = con.createStatement();
+            //3.ResultSet类，用来存放获取的结果集！！
+            return sta.executeUpdate(sql);
+		} catch (Exception e){
+			log.error("jdbc连接数据库 更新操作 异常：",e);
+			return null;
+		}
 	}
+	
 	
 	/**
 	 * 格式化列名
@@ -177,7 +186,8 @@ public class JdbcUtil {
 	public static void main(String[] args) {
 		String sql = "SELECT * FROM sys_menu";
 		MenuBean bean = new MenuBean();
-		select(sql,bean);
+		 List<MenuBean> list = select(sql,bean);
+		System.out.println("返回值："+JSONArray.fromObject(list).toString());
 	}
 	
 }

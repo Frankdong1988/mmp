@@ -48,7 +48,7 @@
     </servlet-mapping>
     <servlet>  
         <servlet-name>initServlet</servlet-name>  
-        <servlet-class>com.frank.mmp.common.controller.InitServlet</servlet-class>  
+        <servlet-class>com.frank.mmp.common.servlet.InitServlet</servlet-class>  
 	    <load-on-startup>3</load-on-startup>  
     </servlet>  
 </web-app>

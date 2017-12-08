@@ -35,31 +35,7 @@ public class SystemController extends BaseController implements Serializable{
 		map.put("code", "0");
 		map.put("msg", "ok");
 		model.addAttribute(map);
-		super.outWriteJsonData(resp, JSONObject.fromObject(map).toString());
-	}
-	
-	@RequestMapping("testVoid")
-	public void testVoid(HttpServletRequest request,HttpServletResponse resp,ModelAndView mav){
-		System.out.println("=======================");
-		System.out.println("testVoid 已执行");
-		System.out.println("systemService实例："+systemService);
-		request.setAttribute("data", mav);
-	}
-	
-	@RequestMapping("testStr")
-	public String testStr(HttpServletRequest request,HttpServletResponse resp,ModelAndView mav){
-		System.out.println("=======================");
-		System.out.println("testStr 已执行");
-		System.out.println("systemService实例："+systemService);
-		return null;
-	}
-	
-	@RequestMapping("testPage")
-	public String testPage(HttpServletRequest request,HttpServletResponse resp,ModelAndView mav){
-		System.out.println("=======================");
-		System.out.println("testPage 已执行");
-		System.out.println("systemService实例："+systemService);
-		return "main";
+		outWriteJsonData(resp, JSONObject.fromObject(map).toString());
 	}
 	
 }

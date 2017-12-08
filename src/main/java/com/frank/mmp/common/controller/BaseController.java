@@ -11,6 +11,11 @@ import org.slf4j.LoggerFactory;
 public class BaseController implements Serializable {
 	private static final long serialVersionUID = 4873282907611331773L;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	/**
+	 * 输出json格式数据到客户端
+	 * @param res
+	 * @param jsonStr
+	 */
 	protected void outWriteJsonData(HttpServletResponse res,String jsonStr){
 		try {
 			res.setCharacterEncoding("utf-8");

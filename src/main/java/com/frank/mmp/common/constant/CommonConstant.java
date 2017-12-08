@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.frank.mmp.common.context;
+package com.frank.mmp.common.constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author Administrator
  * 公共静态常量类
  */
-public class ApplicationCommon {
+public class CommonConstant {
 	/** 用户被允许的资源session key **/
 	public static final String USER_ALLOWABLE_RESOURCE_SESSION_KEY = "USER_ALLOWABLE_SESSION_RESOURCE_KEY";
 	/** 系统无需登录的url 全局容器key **/
