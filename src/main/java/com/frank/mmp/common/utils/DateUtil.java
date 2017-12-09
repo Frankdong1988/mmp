@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.frank.mmp.common.utils;
 
 import java.util.Calendar;

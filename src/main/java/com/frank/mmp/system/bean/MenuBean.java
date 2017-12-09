@@ -1,8 +1,6 @@
 package com.frank.mmp.system.bean;
 
 public class MenuBean {
-	/**主键**/
-	private Long menuId; 
 	/**菜单名称**/
 	private String menuName; 
 	/**菜单连接**/
@@ -11,10 +9,8 @@ public class MenuBean {
 	private String menuStyle; 
 	/**菜单图标**/
 	private String menuIco; 
-	/**菜单登录校验 1：不需要登录校验，2：需要登录校验**/
+	/**菜单登录校验 1：不需要登录校验，2：需要登录校验 **/
 	private Integer menuLoginCheck; 
-	/**菜单父id**/
-	private Long menuParentId;
 	/**菜单类型(page、button)**/
 	private String menuType;
 	
@@ -23,12 +19,6 @@ public class MenuBean {
 	}
 	public void setMenuLoginCheck(Integer menuLoginCheck) {
 		this.menuLoginCheck = menuLoginCheck;
-	}
-	public Long getMenuId() {
-		return menuId;
-	}
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
 	}
 	public String getMenuName() {
 		return menuName;
@@ -60,11 +50,5 @@ public class MenuBean {
 	public void setMenuType(String menuType) {
 		this.menuType = menuType;
 	}
-	public Long getMenuParentId() {
-		return menuParentId;
-	}
-	public void setMenuParentId(Long menuParentId) {
-		this.menuParentId = menuParentId;
-	} 
 	
 }
