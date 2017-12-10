@@ -11,7 +11,6 @@ import com.frank.mmp.system.bean.UserBean;
  *
  */
 public interface SystemService {
-	
 	/**
 	 * 登录
 	 * @param account
@@ -25,7 +24,7 @@ public interface SystemService {
 	 * @param psw
 	 * @return
 	 */
-	public UserBean unSubscribe(String account,String psw);
+	public void unSubscribe(String account,String psw);
 	/**
 	 * 注册账户
 	 * @param account

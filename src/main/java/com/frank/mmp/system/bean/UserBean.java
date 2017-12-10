@@ -1,5 +1,7 @@
 package com.frank.mmp.system.bean;
 
+import java.util.Date;
+
 public class UserBean {
 	/**主键**/
 	private Long uId;
@@ -9,7 +11,15 @@ public class UserBean {
 	private String uAccount;
 	/**密码**/
 	private String uPsw;
+	/**密码**/
+	private Date uAddTime;
 	
+	public Date getuAddTime() {
+		return uAddTime;
+	}
+	public void setuAddTime(Date uAddTime) {
+		this.uAddTime = uAddTime;
+	}
 	public Long getuId() {
 		return uId;
 	}

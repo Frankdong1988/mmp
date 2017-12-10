@@ -36,7 +36,7 @@ public class CustomExceptionHandle implements HandlerExceptionResolver{
 			e = (CustomException) ex;
 		} else {
 			log.error("系统异常啦：",e);
-			e = new CustomException(ExceptionEnum.SYSTEM_UNKONW_EXCEPTION);
+			e = new CustomException(ExceptionEnum.UNKONW_EXCEPTION);
 		}
 		Map<String, Object> map = EnumExceptionUtil.getEnumExceptionMsg(e.getExceptionEnum(), PROPERTIES);
 		mav.addObject(map);

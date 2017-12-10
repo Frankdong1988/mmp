@@ -44,7 +44,7 @@ public class EnumExceptionUtil {
 		List<String> properties = new ArrayList<>();
 		properties.add("code");
 		properties.add("message");
-		getEnumExceptionMsg(ExceptionEnum.SYSTEM_UNKONW_EXCEPTION, properties);
+		getEnumExceptionMsg(ExceptionEnum.UNKONW_EXCEPTION, properties);
 	}
 	
 }
