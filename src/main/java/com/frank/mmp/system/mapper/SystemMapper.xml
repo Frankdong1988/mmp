@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.frank.mmp.system.dao.SystemDao">
-
-	<!-- 测试数据库 -->
-	<select id="testMapper" resultType="map">
-		select * FROM test_user LIMIT 1
+	
+	<select id="findSystemUser" parameterType="com.frank.mmp.system.bean.UserBean" 
+		resultType="com.frank.mmp.system.bean.UserBean" >
+		SELECT * FROM sys_user
+		<include refid="systemUser_Query_Item" />
 	</select>
-
+	
+	<select id="findMenuSourceByUserId" parameterType="String" resultType="">
+	
+	</select>
+	
 </mapper>

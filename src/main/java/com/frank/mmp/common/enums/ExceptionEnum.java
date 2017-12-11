@@ -1,9 +1,12 @@
 package com.frank.mmp.common.enums;
 
+import com.frank.mmp.common.constant.MenuMessageCodeConstant;
+
 public enum ExceptionEnum {
-	SYSTEM_UNKONW_EXCEPTION("406","系统错误，请联系管理员"),
-	USER_UNLOGIN_OR_LOGIN_OUTTIME("301","用户未登录或登录超时"),
-	SUCCESS("0","ok");
+	SUCCESS(MenuMessageCodeConstant.SUCCESS,"ok"),
+	USER_UNLOGIN_OR_LOGIN_OUTTIME(MenuMessageCodeConstant.USER_UNLOGIN_OR_LOGIN_OUTTIME,"用户未登录或登录超时"),
+	UNKONW_EXCEPTION(MenuMessageCodeConstant.UNKONW_EXCEPTION,"系统未知异常，请联系管理员");
+	
 	
 	private String code;
 	private String message;

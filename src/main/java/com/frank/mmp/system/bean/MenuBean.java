@@ -1,6 +1,8 @@
 package com.frank.mmp.system.bean;
 
-public class MenuBean {
+import com.frank.mmp.common.bean.BaseMenu;
+
+public class MenuBean extends BaseMenu<MenuBean> {
 	/**菜单名称**/
 	private String menuName; 
 	/**菜单连接**/

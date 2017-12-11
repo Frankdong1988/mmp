@@ -39,7 +39,7 @@ public class BaseMenu<E> {
 	 * @param list
 	 * @return
 	 */
-	protected static <T extends BaseMenu<T>> List<T> formatTree(List<T> list) {
+	public static <T extends BaseMenu> List<T> formatTree(List<T> list) {
         List<T> nodeList = new ArrayList<T>();
         for(T node1 : list){
             boolean mark = false;
