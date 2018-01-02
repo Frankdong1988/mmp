@@ -35,6 +35,7 @@ public class LoginInterceptor implements  HandlerInterceptor{
 		Map<String, MenuBean> noLoginUrlMap = (Map<String, MenuBean>) request.getSession().getServletContext().getAttribute(CommonConstant.APPLICATION_NOLOGIN_URL_KEY);
 		// 请求的url路径
 		String requestUrl = request.getRequestURI().replace(request.getContextPath(), "").trim();
+		
 		if(null != noLoginUrlMap.get(requestUrl)){
 			//如果当前的url属于不需要登录的范围
 			return true;

@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.frank.mmp.common.constant.CommonConstant;
 import com.frank.mmp.common.controller.BaseController;
+import com.frank.mmp.common.enums.ExceptionEnum;
+import com.frank.mmp.common.exception.CustomException;
 import com.frank.mmp.system.bean.UserBean;
 import com.frank.mmp.system.constant.SysConstant;
 import com.frank.mmp.system.service.SystemService;
@@ -44,6 +46,9 @@ public class SystemController extends BaseController implements Serializable{
 	@RequestMapping("userLogin")
 	public String userLogin(HttpServletRequest req,HttpServletResponse res,String account,String psw)throws Exception{
 		UserBean user = systemService.findUserByUserId(account, psw);
+		if(null == user){
+			throw new CustomException(ExceptionEnum.SYSTEM_ACCOUNT_PSW_ERROR);
+		}
 		req.getSession().setAttribute(SysConstant.SYSTEM_SESSION_USER_KEY, user);
 		return CommonConstant.SYSTEM_MAIN_PAGE;
 	}

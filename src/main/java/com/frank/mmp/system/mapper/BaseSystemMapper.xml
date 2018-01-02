@@ -22,7 +22,7 @@
 	</sql>
 	
 	<resultMap type="com.frank.mmp.system.bean.UserBean" id="sys_user_resultMap">
-		<result property="uId" column="u_id" javaType="int" jdbcType="INTEGER" /> <!--int(11)-->
+		<result property="uId" column="u_id" javaType="Long" jdbcType="BIGINT" /> <!--int(11)-->
 		<result property="uName" column="u_name" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->
 		<result property="uAccount" column="u_account" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->
 		<result property="uPsw" column="u_psw" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->

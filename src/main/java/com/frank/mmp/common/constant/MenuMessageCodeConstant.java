@@ -22,4 +22,6 @@ public class MenuMessageCodeConstant {
 	public static final String SYSTEM_ACCOUNT_ALREADY_EXIST = "304";
 	/** 数据重复异常 **/
 	public static final String SYSTEM_DATA_REPEAT_EXCEPTION = "305";
+	/** 帐号或密码错误 **/
+	public static final String SYSTEM_ACCOUNT_PSW_ERROR = "306";
 }
