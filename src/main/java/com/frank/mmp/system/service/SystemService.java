@@ -17,7 +17,7 @@ public interface SystemService {
 	 * @param psw
 	 * @return
 	 */
-	public UserBean login(String account,String psw);
+	public UserBean findUserByUserId(String account,String psw);
 	/**
 	 * 注销账户
 	 * @param account

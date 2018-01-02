@@ -1,5 +1,6 @@
 package com.frank.mmp.common.servlet;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import com.frank.mmp.system.bean.MenuBean;
  * @author dgf
  * 项目初始化类
  */
-public class InitServlet extends HttpServlet {
+public class InitServlet extends HttpServlet implements Serializable {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private static final long serialVersionUID = 8860980594697046057L;
 	
@@ -29,6 +30,9 @@ public class InitServlet extends HttpServlet {
 			MenuBean menuBean = new MenuBean();
 			String sql = "SELECT * FROM sys_menu WHERE menu_login_check = 1";
 			List<MenuBean> list = JdbcUtil.select(sql, menuBean);
+			if(null == list){
+				return;
+			}
 			Map<String, MenuBean> map = new HashMap<>();
 			while(!list.isEmpty()){
 				MenuBean menu = list.remove(0);

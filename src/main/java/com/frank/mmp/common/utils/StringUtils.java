@@ -1,19 +1,16 @@
 package com.frank.mmp.common.utils;
 
-
-
 /**
- * 
  * @author tongyi
  * @date Sep 28, 2013
- * 
  */
 public class StringUtils {
-
 	public static String toUpperCaseFirst(String value) {
 		return Character.toUpperCase(value.charAt(0)) + value.substring(1);
 	}
-
+	public static void main(String[] args) {
+		System.out.println("=====++++");
+	}
 	public static boolean javaBoolean(String value) {
 		return value.startsWith("tinyint(1)");
 	}

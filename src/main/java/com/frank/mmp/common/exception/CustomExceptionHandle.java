@@ -1,5 +1,6 @@
 package com.frank.mmp.common.exception;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.frank.mmp.common.enums.ExceptionEnum;
 import com.frank.mmp.common.utils.EnumExceptionUtil;
+
+import net.sf.json.JSONObject;
 
 public class CustomExceptionHandle implements HandlerExceptionResolver{
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -32,13 +35,24 @@ public class CustomExceptionHandle implements HandlerExceptionResolver{
 	public ModelAndView resolveException(HttpServletRequest req, HttpServletResponse res, Object obj,Exception ex) {
 		ModelAndView mav = new ModelAndView();
 		CustomException e = null;
-		if(ex instanceof SystemException){
-			e = (CustomException) ex;
+		System.out.println("异常对象："+JSONObject.fromObject(ex).toString());
+		Class ec = ex.getClass();
+		System.out.println(ec.getName());
+		Field[] ecfs = ec.getDeclaredFields();
+		boolean objCheck = false;
+		for(int i=0; i<ecfs.length;i++){
+			if(ecfs[i].getName().endsWith("Enum")){
+				objCheck = true;
+			}
+		}
+		Map<String, Object> map = null;
+		if(objCheck){
+			
 		} else {
 			log.error("系统异常啦：",e);
 			e = new CustomException(ExceptionEnum.UNKONW_EXCEPTION);
+			map = EnumExceptionUtil.getEnumExceptionMsg(e.getExceptionEnum(), PROPERTIES);
 		}
-		Map<String, Object> map = EnumExceptionUtil.getEnumExceptionMsg(e.getExceptionEnum(), PROPERTIES);
 		mav.addObject(map);
 		return mav;
 	}

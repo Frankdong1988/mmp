@@ -8,20 +8,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.frank.mmp.system.bean.MenuBean;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 /**
  * @author Administrator
@@ -44,7 +35,8 @@ public class JdbcUtil {
 			try {
 				con = DriverManager.getConnection(url,user,password);
 			} catch (SQLException e) {
-				log.error("异常：",e);
+				log.error("获取数据库连接异常：",e);
+				throw new RuntimeException(e);
 			} 
 		}
 		return con;
@@ -68,8 +60,6 @@ public class JdbcUtil {
             //加载驱动程序
             Class.forName(driver);
             con = getCon();
-            // 1.getConnection()方法，连接MySQL数据库
-            if(!con.isClosed())
             //2.创建statement类对象，用来执行SQL语句！！
             sta = con.createStatement();
             //3.ResultSet类，用来存放获取的结果集！！
@@ -129,7 +119,9 @@ public class JdbcUtil {
         		if(null != sta){
         			sta.close();
         		}
-				con.close();
+        		if(null != con){
+        			con.close();
+        		}
 			} catch (Exception e) {
 				log.error("jdbc连接关闭异常：",e);
 			}
@@ -184,10 +176,11 @@ public class JdbcUtil {
 	}
 	
 	public static void main(String[] args) {
-		String sql = "SELECT * FROM sys_menu";
-		MenuBean bean = new MenuBean();
-		 List<MenuBean> list = select(sql,bean);
-		System.out.println("返回值："+JSONArray.fromObject(list).toString());
+//		String sql = "SELECT * FROM sys_menu";
+//		MenuBean bean = new MenuBean();
+//		 List<MenuBean> list = select(sql,bean);
+//		System.out.println("返回值："+JSONArray.fromObject(list).toString());
+		System.out.println("+++++");
 	}
 	
 }

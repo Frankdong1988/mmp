@@ -21,4 +21,22 @@
 		</if>
 	</sql>
 	
+	<resultMap type="com.frank.mmp.system.bean.UserBean" id="sys_user_resultMap">
+		<result property="uId" column="u_id" javaType="int" jdbcType="INTEGER" /> <!--int(11)-->
+		<result property="uName" column="u_name" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->
+		<result property="uAccount" column="u_account" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->
+		<result property="uPsw" column="u_psw" javaType="string" jdbcType="VARCHAR" /> <!--varchar(255)-->
+		<result property="uAddTime" column="u_addTime" javaType="date" jdbcType="DATE" /> <!--datetime-->
+	</resultMap>
+	
+	<resultMap type="com.frank.mmp.system.bean.MenuPackageBean" id="sys_menu_resultMap">
+		<result property="menuId" column="menu_id" javaType="int" jdbcType="INTEGER" /> <!--int(11)-->
+		<result property="menuName" column="menu_name" javaType="string" jdbcType="VARCHAR" /> <!--varchar(50)-->
+		<result property="menuUrl" column="menu_url" javaType="string" jdbcType="VARCHAR" /> <!--varchar(500)-->
+		<result property="menuStyle" column="menu_style" javaType="string" jdbcType="VARCHAR" /> <!--varchar(225)-->
+		<result property="menuIco" column="menu_ico" javaType="string" jdbcType="VARCHAR" /> <!--varchar(20)-->
+		<result property="menuParentId" column="menu_parentId" javaType="int" jdbcType="INTEGER" /> <!--int(11)-->
+		<result property="menuType" column="menu_type" javaType="string" jdbcType="VARCHAR" /> <!--varchar(10)-->
+		<result property="menuLoginCheck" column="menu_login_check" javaType="int" jdbcType="INTEGER" /> <!--int(11)-->
+	</resultMap>
 </mapper>

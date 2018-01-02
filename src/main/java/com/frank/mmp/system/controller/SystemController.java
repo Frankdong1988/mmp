@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.frank.mmp.common.constant.CommonConstant;
 import com.frank.mmp.common.controller.BaseController;
+import com.frank.mmp.system.bean.UserBean;
+import com.frank.mmp.system.constant.SysConstant;
 import com.frank.mmp.system.service.SystemService;
 
 import net.sf.json.JSONObject;
@@ -26,16 +29,29 @@ public class SystemController extends BaseController implements Serializable{
 	@Autowired
 	private SystemService systemService;
 	
-	@RequestMapping("testMapper")
-	public void testMapper(HttpServletRequest request,HttpServletResponse resp,Model model){
-		System.out.println("=======================");
-		System.out.println("testMapper 已执行");
-		System.out.println("systemService实例："+systemService);
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("code", "0");
-		map.put("msg", "ok");
-		model.addAttribute(map);
-		outWriteJsonData(resp, JSONObject.fromObject(map).toString());
+	@RequestMapping("userSubscribe")
+	public String userSubscribe(HttpServletRequest req,HttpServletResponse res){
+		
+		return null;
+	}
+	
+	@RequestMapping("userUnSubscribe")
+	public String userUnSubscribe(){
+		
+		return null;
+	}
+	
+	@RequestMapping("userLogin")
+	public String userLogin(HttpServletRequest req,HttpServletResponse res,String account,String psw)throws Exception{
+		UserBean user = systemService.findUserByUserId(account, psw);
+		req.getSession().setAttribute(SysConstant.SYSTEM_SESSION_USER_KEY, user);
+		return CommonConstant.SYSTEM_MAIN_PAGE;
+	}
+	
+	@RequestMapping("userLoginOut")
+	public String userLoginOut(HttpServletRequest req,HttpServletResponse res){
+		req.getSession().removeAttribute(SysConstant.SYSTEM_SESSION_USER_KEY);
+		return CommonConstant.SYSTEM_LOGING_PAGE;
 	}
 	
 }

@@ -24,7 +24,7 @@ public class SystemServiceImpl implements SystemService {
 	private SystemDao systemDao;
 
 	@Override
-	public UserBean login(String account, String psw) {
+	public UserBean findUserByUserId(String account, String psw) {
 		if(null == account || "".equals(account.trim()) || null == psw || "".equals(psw.trim())){
 			throw new SystemException(SystemExceptionEnum.SYSTEM_ACCOUNT_PSW_IS_NULL);
 		}

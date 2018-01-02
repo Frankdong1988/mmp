@@ -19,12 +19,14 @@ import org.apache.commons.lang.StringUtils;
  * @date Sep 28, 2013
  */
 public class CodeGenerator {
-	private final static String					DRIVER		= "com.mysql.jdbc.Driver";
-	private final static String					URL			= "jdbc:mysql://10.10.0.9:3306/information_schema";//rm-bp1460o9ak1f18vrzo.mysql.rds.aliyuncs.com rm-bp1vxqlotd8bqf601o.mysql.rds.aliyuncs.com
-	private final static String					USERNAME	= "root";//xjzx_java_read  xjzx_test_root01
-	private final static String					PASSWORD	= "123456";//%A*IRqg@  51xjzx#Com
-	private final static String					QUERY_SQL	= "SELECT `COLUMN_NAME`, `DATA_TYPE`, `COLUMN_TYPE`, `EXTRA`,`COLUMN_COMMENT` FROM `COLUMNS` WHERE `TABLE_SCHEMA` = ? AND `TABLE_NAME` = ? ORDER BY `ORDINAL_POSITION` ASC";
-	private final static Map<String, String>	JAVA_TYPE	= new HashMap<String, String>();
+	private final static String	TABLE = "sys_menu";
+	private final static String	DB = "user";
+	private final static String	DRIVER = "com.mysql.jdbc.Driver";
+	private final static String	URL = "jdbc:mysql://localhost:3306/information_schema";//rm-bp1460o9ak1f18vrzo.mysql.rds.aliyuncs.com rm-bp1vxqlotd8bqf601o.mysql.rds.aliyuncs.com
+	private final static String	USERNAME = "root";//xjzx_java_read  xjzx_test_root01
+	private final static String	PASSWORD = "root";//%A*IRqg@  51xjzx#Com
+	private final static String	QUERY_SQL = "SELECT `COLUMN_NAME`, `DATA_TYPE`, `COLUMN_TYPE`, `EXTRA`,`COLUMN_COMMENT` FROM `COLUMNS` WHERE `TABLE_SCHEMA` = ? AND `TABLE_NAME` = ? ORDER BY `ORDINAL_POSITION` ASC";
+	private final static Map<String, String> JAVA_TYPE = new HashMap<String, String>();
 
 	static {
 		JAVA_TYPE.put("int", "int");
@@ -46,9 +48,9 @@ public class CodeGenerator {
 		JAVA_TYPE.put("mediumtext", "string");
 	}
 	public static void main(String[] args) {
-		String tableSchema = "xjzx_tools";
+		String tableSchema = DB;
 		// String tableName = "tb_order";
-		String tableName = "phone_operator_file";
+		String tableName = TABLE;
 
 		Connection conn = null;
 		try {
@@ -101,11 +103,8 @@ public class CodeGenerator {
 			if ("string".equalsIgnoreCase(javaType) || "date".equalsIgnoreCase(javaType)) {
 				javaType = toUpperCaseFirst(javaType);
 			}
-
 			System.out.println(ns + ".set" + toUpperCaseFirst(toCamelCase(column)) + "(" + toCamelCase(column) + ");");
-
 		}
-
 	}
 
 	private static void doGeneratorActionField(Connection connection, String tableSchema, String tableName) throws SQLException {
@@ -126,12 +125,10 @@ public class CodeGenerator {
 			if ("string".equalsIgnoreCase(javaType) || "date".equalsIgnoreCase(javaType)) {
 				javaType = toUpperCaseFirst(javaType);
 			}
-
 			System.out.println(javaType + " " + toCamelCase(column) + " = formGroup.getField(\"" + toCamelCase(column) + "\").get" + toUpperCaseFirst(javaType)
 					+ "Value();");
 			functionParam += (StringUtils.isEmpty(functionParam)) ? (javaType + " " + toCamelCase(column)) : (", " + javaType + " " + toCamelCase(column));
 		}
-
 		System.out.println();
 		System.out.println(functionParam);
 	}
@@ -185,7 +182,7 @@ public class CodeGenerator {
 		System.out.println("\t<typeAlias alias=\"" + ns + "\" type=\"vip.yile.dubaita.domain." + toUpperCaseFirst(toCamelCase(ns)) + "DO\" />");
 		System.out.println("\t<typeAlias alias=\"" + ns + "_query\" type=\"vip.yile.dubaita.query." + toUpperCaseFirst(toCamelCase(ns)) + "Query\" />");
 
-		System.out.println("\t<resultMap type=\"" + ns + "\" id=\"" + ns + "_result\">");
+		System.out.println("\t<resultMap type=\"" + ns + "\" id=\"" + tableName + "_resultMap\">");
 
 		PreparedStatement preparedStmt = connection.prepareStatement(QUERY_SQL);
 		preparedStmt.setString(1, tableSchema);

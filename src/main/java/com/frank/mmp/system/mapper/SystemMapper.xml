@@ -3,12 +3,12 @@
 <mapper namespace="com.frank.mmp.system.dao.SystemDao">
 	
 	<select id="findSystemUser" parameterType="com.frank.mmp.system.bean.UserBean" 
-		resultType="com.frank.mmp.system.bean.UserBean" >
+		resultMap="sys_user_resultMap" >
 		SELECT * FROM sys_user
 		<include refid="systemUser_Query_Item" />
 	</select>
 	
-	<select id="findMenuSourceByUserId" parameterType="String" resultType="">
+	<select id="findMenuSourceByUserId" parameterType="String" resultMap="sys_menu_resultMap">
 	
 	</select>
 	

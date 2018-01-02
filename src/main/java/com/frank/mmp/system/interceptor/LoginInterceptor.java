@@ -14,6 +14,7 @@ import com.frank.mmp.common.constant.CommonConstant;
 import com.frank.mmp.common.enums.ExceptionEnum;
 import com.frank.mmp.common.utils.EnumExceptionUtil;
 import com.frank.mmp.system.bean.MenuBean;
+import com.frank.mmp.system.constant.SysConstant;
 
 import net.sf.json.JSONObject;
 
@@ -24,9 +25,9 @@ public class LoginInterceptor implements  HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		Object obj = request.getSession().getAttribute(CommonConstant.USER_SESSION_KEY);
+		Object obj = request.getSession().getAttribute(SysConstant.SYSTEM_SESSION_USER_KEY);
 		if(null != obj){
-			// 用户已登录，或该请求在非登录要求的名单中，拦截放行
+			// 用户已登录
 			return true;
 		}
 		// 判断当前请求的 URL 是否需要登录校验
@@ -57,6 +58,7 @@ public class LoginInterceptor implements  HandlerInterceptor{
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+	
 	}
 
 }
